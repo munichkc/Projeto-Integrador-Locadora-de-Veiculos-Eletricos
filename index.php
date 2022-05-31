@@ -1,3 +1,25 @@
+<?php
+IF (isset($_POST['cadastro'])) {
+    // print_r($_POST['nome']);
+    // print_r('<br>');
+    // print_r($_POST['sobrenome']);
+    // print_r('<br>');
+    // print_r($_POST['email']);
+    // print_r('<br>');
+    // print_r($_POST['senha']);
+
+    include_once('config.php');
+
+    $nome = $_POST['nome'];
+    $sobrenome = $_POST['sobrenome'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+
+    $result = mysqli_query($conexao, "INSERT INTO usuario(nome, sobrenome, email, senha) 
+    VALUES('$nome', '$sobrenome', '$email', '$senha')");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -388,7 +410,7 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <span class="form-label">Hora</span>
+                                                <span class="form-label">Hour</span>
                                                 <select class="form-control">
                                                     <option>1</option>
                                                     <option>2</option>
@@ -449,7 +471,7 @@
                                     <div class="row">
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <span class="form-label">Hora</span>
+                                                <span class="form-label">Hour</span>
                                                 <select class="form-control">
                                                     <option>1</option>
                                                     <option>2</option>
@@ -499,11 +521,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
                             <div class="form-btn">
-                                <button class="submit-btn">Alugue</button>
-                                <br>
-                                <button class="submit-btn">Reserve</button>
+                                <button class="submit-btn">Agende Agora</button>
                             </div>
                         </form>
                     </div>
@@ -540,18 +559,18 @@
                   ">
                 <div class="card-body p-5 shadow-5 text-center">
                   <h2 class="fw-bold mb-5">Cadastre-se</h2>
-                  <form>
+                  <form action="index.php" method="POST"> <!-- CONEXÃO COM O BANCO DE DADOS -->
                     <!-- 2 column grid layout with text inputs for the first and last names -->
                     <div class="row">
                       <div class="col-md-6 mb-4">
                         <div class="form-outline">
-                          <input type="text" id="form3Example1" class="form-control" />
+                          <input type="text" name="nome" id="form3Example1" class="form-control" />
                           <label class="form-label" for="form3Example1"> Nome</label>
                         </div>
                       </div>
                       <div class="col-md-6 mb-4">
                         <div class="form-outline">
-                          <input type="text" id="form3Example2" class="form-control" />
+                          <input type="text" name="sobrenome" id="form3Example2" class="form-control" />
                           <label class="form-label" for="form3Example2">Sobrenome</label>
                         </div>
                       </div>
@@ -559,13 +578,13 @@
       
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                      <input type="email" id="form3Example3" class="form-control" />
+                      <input type="email" name="email" id="form3Example3" class="form-control" />
                       <label class="form-label" for="form3Example3">Email</label>
                     </div>
       
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                      <input type="password" id="form3Example4" class="form-control" />
+                      <input type="password" name="senha" id="form3Example4" class="form-control" />
                       <label class="form-label" for="form3Example4">Senha</label>
                     </div>
       
@@ -578,16 +597,16 @@
                     </div>
       
                     <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                    <button type="submit" name="cadastro" class="btn btn-primary btn-block mb-4">
                       Cadastre-se
                     </button>
-                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                    <button type="submit" name="login" class="btn btn-primary btn-block mb-4">
                         Login
                       </button>
       
                     <!-- Register buttons -->
                     <div class="text-center">
-                      <p>ou Cadastre-se com :</p>
+                      <p>ou Inscreva-se com :</p>
                       <button type="button" class="btn btn-link btn-floating mx-1">
                         <i class="fab fa-facebook-f"></i>
                       </button>
@@ -624,8 +643,7 @@
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">Fale Conosco</h2>
-        <br>
-        <br>
+            <h3 class="section-subheading text-muted">Ficou com alguma dúvida? Entre em contato com a gente!</h3>
         </div>
         <form id="contactForm" data-sb-form-api-token="API_TOKEN">
             <div class="row align-items-stretch mb-5">
@@ -660,16 +678,14 @@
                 <div class="text-center text-white mb-3">
                     <div class="fw-bolder">Mensagem enviada com sucesso!</div>
                     
-                    
                     <br />
-                 <!-- Arruma a parte do fale conosco,voltar tela-->   
+                 <!-- podemos colocar um link de referência para mensagem aqui-->   
                 </div>
             </div>
             <!-- Erro de Mensagem-->
             <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
             <!-- Botão de Enviar-->
             <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Enviar Mensagem</button></div>
-            
         </form>
     </div>
 </section>
@@ -866,7 +882,10 @@
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 </div>
-              </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a class="link-dark text-decoration-none" href="#">Administrar</a>
+                </div>
+            </div>
         </div>
     </footer>
 
